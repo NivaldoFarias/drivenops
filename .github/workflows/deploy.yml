@@ -4,7 +4,8 @@ on:
     branches:
       - main
 jobs:
-  build:
+  deploy:
+    environment: deploy
     runs-on: drivenops
     env:
       working-directory: ./server
@@ -13,12 +14,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: SpicyPizza/create-envfile@v1
         with:
-          envkey_POSTGRES_USER: ${{ secrets.DEPLOY__POSTGRES_USER }}
-          envkey_POSTGRES_PASSWORD: ${{ secrets.DEPLOY__POSTGRES_PASSWORD }}
-          envkey_POSTGRES_DB: ${{ secrets.DEPLOY__POSTGRES_DB }}
-          envkey_POSTGRES_PORT: ${{ secrets.DEPLOY__POSTGRES_PORT }}
-          envkey_POSTGRES_HOST: ${{ secrets.DEPLOY__POSTGRES_HOST }}
-          envkey_DATABASE_URL: ${{ secrets.DEPLOY__DATABASE_URL }}
+          envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
           envkey_NODE_ENV: production
           file_name: .env
           working-directory: ${{ env.working-directory }}
