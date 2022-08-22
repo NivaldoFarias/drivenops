@@ -4,7 +4,7 @@ services:
     build: ./client
     container_name: drivenops-client
     volumes:
-      - build_client:/var/www/html
+      - client_data:/var/www/html
 
   nginx:
     build: ./nginx
@@ -13,9 +13,9 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - build_client:/var/www/html
+      - client_data:/var/www/html
     depends_on:
       - drivenops-client
 
 volumes:
-  build_client:
+  client_data:
