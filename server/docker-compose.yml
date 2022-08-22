@@ -5,7 +5,7 @@ services:
     container_name: drivenops-postgres
     restart: always
     ports:
-      - 5432:5432
+      - 1324:5432
     env_file:
       - .env
     volumes:
@@ -15,7 +15,7 @@ services:
     container_name: drivenops-server
     build: .
     ports:
-      - 5000:5000
+      - 5050:5000
     depends_on:
       - drivenops-postgres
     env_file:

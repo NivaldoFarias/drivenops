@@ -1,5 +1,0 @@
-{
-  "yaml.schemas": {
-    "https://json.schemastore.org/github-workflow.json": "file:///home/nivaldo/src/projects/drivenops/.github/workflows/deploy.yml"
-  }
-}

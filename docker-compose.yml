@@ -1,0 +1,21 @@
+version: '3'
+services:
+  drivenops-client:
+    build: ./client
+    container_name: drivenops-client
+    volumes:
+      - build_client:/var/www/html
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - build_client:/var/www/html
+    depends_on:
+      - drivenops-client
+
+volumes:
+  build_client:
