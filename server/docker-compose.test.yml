@@ -1,0 +1,20 @@
+version: '3'
+services:
+  database_test:
+    image: postgres:13
+    container_name: database_test
+    restart: always
+    ports:
+      - 4455:5432
+    env_file:
+      - .env.test
+
+  drivenops_test:
+    container_name: drivenops_test
+    build: .
+    ports:
+      - 5000:5000
+    depends_on:
+      - database_test
+    env_file:
+      - .env.test
