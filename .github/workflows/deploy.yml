@@ -23,7 +23,7 @@ jobs:
           envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
           envkey_NODE_ENV: production
-          directory: ${{ env.server }}
+          directory: ${{ env.root }}
           file_name: .env
       - uses: SpicyPizza/create-envfile@v1.3.0
         with:
