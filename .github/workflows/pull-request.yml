@@ -1,0 +1,21 @@
+name: PullRequest
+on: [pull_request]
+jobs:
+  PullRequest:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./server
+    steps:
+      - uses: actions/checkout@v3
+      - uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DATABASE }}
+          envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          file_name: .env.test
+          working-directory: ${{ env.working-directory }}
+      - run: docker-compose -f docker-compose.test.yml run node_app_github-ci npm run test
+        working-directory: ${{ env.working-directory }}
+      - run: npm i && npm run build
+        working-directory: ${{ env.working-directory }}
