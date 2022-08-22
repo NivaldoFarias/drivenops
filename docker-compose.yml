@@ -1,21 +1,47 @@
 version: '3'
 services:
+  drivenops-postgres:
+    container_name: drivenops-postgres
+    image: postgres:13
+    restart: always
+    ports:
+      - 1234:5432
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  drivenops-server:
+    container_name: drivenops-server
+    build: ./server
+    ports:
+      - 5000:5000
+    env_file:
+      - .env
+    depends_on:
+      - drivenops-postgres
+
   drivenops-client:
-    build: ./client
     container_name: drivenops-client
+    build: ./client
+    env_file:
+      - .env
     volumes:
       - client_data:/var/www/html
 
   nginx:
-    build: ./nginx
     container_name: nginx
+    build: ./nginx
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - client_data:/var/www/html
+    env_file:
+      - .env
     depends_on:
       - drivenops-client
+    volumes:
+      - client_data:/var/www/html
 
 volumes:
+  postgres:
   client_data:
