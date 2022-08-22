@@ -1,23 +1,23 @@
 version: '3'
 services:
-  drivenops_postgres_dev:
+  drivenops-postgres-dev:
     image: postgres:13
-    container_name: drivenops_postgres_dev
+    container_name: drivenops-postgres-dev
     restart: always
-    ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     env_file:
       - .env.dev
+    ports:
+      - 1234:5432
     volumes:
       - postgres:/var/lib/postgresql/data
 
-  drivenops_server_dev:
-    container_name: drivenops_server_dev
+  drivenops-server-dev:
+    container_name: drivenops-server-dev
     build: .
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
+      - 5000:5000
     depends_on:
-      - drivenops_postgres_dev
+      - drivenops-postgres-dev
     env_file:
       - .env.dev
 volumes:

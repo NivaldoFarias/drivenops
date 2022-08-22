@@ -1,7 +1,7 @@
-name: PullRequest
+name: Test
 on: [pull_request]
 jobs:
-  PullRequest:
+  test:
     runs-on: ubuntu-latest
     env:
       working-directory: ./server
@@ -11,11 +11,9 @@ jobs:
         with:
           envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DATABASE }}
+          envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
           file_name: .env.test
           working-directory: ${{ env.working-directory }}
-      - run: docker-compose -f docker-compose.test.yml run node_app_github-ci npm run test
-        working-directory: ${{ env.working-directory }}
-      - run: npm i && npm run build
+      - run: npm run ci:build && npm run ci:test
         working-directory: ${{ env.working-directory }}
