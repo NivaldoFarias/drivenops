@@ -1,0 +1,28 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: drivenops
+    env:
+      working-directory: ./server
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
+      - uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_POSTGRES_USER: ${{ secrets.DEPLOY__POSTGRES_USER }}
+          envkey_POSTGRES_PASSWORD: ${{ secrets.DEPLOY__POSTGRES_PASSWORD }}
+          envkey_POSTGRES_DB: ${{ secrets.DEPLOY__POSTGRES_DB }}
+          envkey_POSTGRES_PORT: ${{ secrets.DEPLOY__POSTGRES_PORT }}
+          envkey_POSTGRES_HOST: ${{ secrets.DEPLOY__POSTGRES_HOST }}
+          envkey_DATABASE_URL: ${{ secrets.DEPLOY__DATABASE_URL }}
+          envkey_NODE_ENV: production
+          file_name: .env
+          working-directory: ${{ env.working-directory }}
+      - run: docker-compose build
+        working-directory: ${{ env.working-directory }}
+      - run: docker-compose down && docker-compose up -d
+        working-directory: ${{ env.working-directory }}
