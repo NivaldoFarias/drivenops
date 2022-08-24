@@ -18,6 +18,6 @@ jobs:
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
           envkey_NODE_ENV: test
           file_name: .env.test
-          working-directory: ${{ env.working-directory }}
+          directory: ${{ env.working-directory }}
       - run: npm run ci:build && npm run ci:test
         working-directory: ${{ env.working-directory }}
